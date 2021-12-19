@@ -6,4 +6,4 @@ sed
 make
 cmake
 ncurses-utils
-
+gh
