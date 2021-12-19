@@ -1,0 +1,7 @@
+[init]
+	defaultBranch = main
+[credential]
+	helper = store --file ~/.git-credentials
+[user]
+	email = thanatoslayer6@gmail.com
+	name = Thanatoslayer6

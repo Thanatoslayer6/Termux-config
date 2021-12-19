@@ -1,0 +1,43 @@
+# Function for setting up configuration
+setup_config(){
+    printf "%s\n" "Setting up bash config..."
+    cp .bashrc $HOME
+    printf "%s\n" "Setting up git config..."
+    cp .gitconfig $HOME
+    printf "%s\n" "Setting up vim config..."
+    cp -r .vim/ $HOME
+    printf "%s\n" "Setting up termux config..."
+    cp -r .termux/ $HOME
+    printf "%s\n" "Reloading termux..."
+    termux-reload-settings
+}
+
+
+# Function for installing packages
+install_packages(){
+    apt update && pkg install < packagelist.txt
+}
+
+
+# Ask user for action
+main(){ 
+    declare -a options=(
+    "Install packages"
+    "Setup config (theme, font, gitconfig...)"
+    "Exit"
+)
+for ((i = 0; i < ${#options[@]}; ++i)); do
+    position=$(( $i + 1 ))
+    echo "$position - ${options[$i]}"
+done
+read -p "Enter a number: " action
+
+case "$action" in
+    "1") install_packages;;
+    "2") setup_config;;
+    "3") printf "%s\n" "Exiting..." ; exit 0;;
+    *)printf "%s\n" "Please enter a proper number... Exiting " ; exit 1;;
+esac
+}
+
+main
