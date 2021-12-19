@@ -1,9 +1,6 @@
 wget
 curl
 vim
-git
 sed
 make
-cmake
-ncurses-utils
 gh

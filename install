@@ -10,12 +10,13 @@ setup_config(){
     cp -r .termux/ $HOME
     printf "%s\n" "Reloading termux..."
     termux-reload-settings
+    printf "%s\n" "Please reopen termux to apply full effect"
 }
 
 
 # Function for installing packages
 install_packages(){
-    apt update && pkg install < packagelist.txt
+    apt update && pkg install $(cat packagelist.txt)
 }
 
 
@@ -23,7 +24,7 @@ install_packages(){
 main(){ 
     declare -a options=(
     "Install packages"
-    "Setup config (theme, font, gitconfig...)"
+    "Setup all config (theme, font, gitconfig...)"
     "Exit"
 )
 for ((i = 0; i < ${#options[@]}; ++i)); do

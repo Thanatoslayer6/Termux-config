@@ -10,4 +10,13 @@ things installed...
 
 ## Installation ##
 
-`./install`
+1. ) First, update repositories and install git
+
+` pkg update && pkg install git `
+
+2. ) Clone repository then run install script
+
+` git clone https://github.com/Thanatoslayer6/Termux-config.git `
+` cd Termux-config `
+` ./install `
+
