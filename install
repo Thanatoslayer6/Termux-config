@@ -8,6 +8,8 @@ setup_config(){
     cp -r .vim/ $HOME
     printf "%s\n" "Setting up termux config..."
     cp -r .termux/ $HOME
+    printf "%s\n" "Removing Motd..."
+    rm -rf ~/../usr/etc/motd
     printf "%s\n" "Reloading termux..."
     termux-reload-settings
     printf "%s\n" "Please reopen termux to apply full effect"
