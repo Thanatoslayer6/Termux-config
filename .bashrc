@@ -1,7 +1,7 @@
 #Termux Bashrc
-white=$(tput setaf 15);
-green=$(tput setaf 35);
-yellow=$(tput setaf 220);
+white='\e[0;37m'
+green='\e[0;32m'
+yellow='\e[0;33m'
 
 prompt_git() {
 	local s='';
