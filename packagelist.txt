@@ -1,6 +1,6 @@
 wget
 curl
-vim
+vim-python
 sed
 make
 gh

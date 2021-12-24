@@ -33,7 +33,11 @@ set shiftwidth=4
 set tabstop=4 
 
 " " P R E F E R E N C E S
-"" Manual Colorscheme fix for solarized8
+" Change cursors on insert/normal modes
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
+
+" Manual Colorscheme fix for solarized8
 "let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 "let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 "set t_Co=256
@@ -78,13 +82,10 @@ nnoremap <silent>tt :term ++rows=10<cr>
 tnoremap <silent>tt <c-\><c-n>:q!<cr>
 
 " PLUG-INS
-call plug#begin('~/.config/vim/plugged')
+call plug#begin('~/.vim/plugins')
   " Enhancements
     Plug 'tpope/vim-commentary'
-    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    Plug 'junegunn/fzf.vim'
     Plug 'preservim/nerdtree'
-    Plug 'sbdchd/neoformat'
     Plug 'sbdchd/indentline.vim'
     Plug 'jiangmiao/auto-pairs'
   " Appearance
@@ -105,7 +106,7 @@ call plug#begin('~/.config/vim/plugged')
     Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
 call plug#end()
 
-" ultisnips [forward: Ctrl+l, backward: Ctrl+k, expand snippet: enter]
+" [ultisnips] [forward: Ctrl+l, backward: Ctrl+k, expand snippet: enter]
 let g:UltiSnipsJumpForwardTrigger="<c-l>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:UltiSnipsExpandTrigger = "<nop>"
@@ -116,10 +117,7 @@ call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_opti
     \ 'completor': function('asyncomplete#sources#ultisnips#completor'),
     \ }))
 
-" fzf
-nnoremap <C-p> :Files <cr>
-
-" nerdtree
+" [nerdtree]
 let g:webdevicons_enable_nerdtree = 1
 let g:NERDTreeQuitOnOpen=1
 nnoremap <C-f> :NERDTreeToggle <cr>
@@ -134,7 +132,7 @@ autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTr
 " Close the tab if NERDTree is the only window remaining in it.
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
-" lightline.vim
+" [lightline.vim]
 set laststatus=2
 let g:lightline = {
       \ 'colorscheme': '16color',
@@ -157,10 +155,7 @@ function! MyFileformat()
     return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
   endfunction
 
-" neoformat
-nnoremap <F2> :Neoformat prettier <cr>
-
-" asyncomplete.vim
+" [asyncomplete.vim]
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
