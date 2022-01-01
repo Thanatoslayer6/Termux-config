@@ -4,6 +4,7 @@ syntax on
 set nocompatible 
 filetype plugin on
 filetype indent on
+set viminfo='10000,<10000,s10,h
 set incsearch
 set hlsearch
 set wildmenu
@@ -85,15 +86,13 @@ tnoremap <silent>tt <c-\><c-n>:q!<cr>
 call plug#begin('~/.vim/plugins')
   " Enhancements
     Plug 'tpope/vim-commentary'
-    Plug 'preservim/nerdtree'
-    Plug 'sbdchd/indentline.vim'
     Plug 'jiangmiao/auto-pairs'
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
   " Appearance
     Plug 'itchyny/lightline.vim'
-    Plug 'ryanoasis/vim-devicons'
   " Syntax
-    Plug 'ap/vim-css-color'
-    Plug 'sheerun/vim-polyglot'
+  " (NONE)
   " LSP
     Plug 'prabirshrestha/vim-lsp'
     Plug 'mattn/vim-lsp-settings'
@@ -106,6 +105,17 @@ call plug#begin('~/.vim/plugins')
     Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
 call plug#end()
 
+" [fzf]
+" Find root directory and execute :Files
+function! s:find_git_root()
+  return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+endfunction
+let g:fzf_action = { 'enter': 'tab split' }
+
+command! ProjectFiles execute 'Files' s:find_git_root()
+
+nnoremap <C-p> :ProjectFiles <cr>
+
 " [ultisnips] [forward: Ctrl+l, backward: Ctrl+k, expand snippet: enter]
 let g:UltiSnipsJumpForwardTrigger="<c-l>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
@@ -116,44 +126,6 @@ call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_opti
     \ 'allowlist': ['*'],
     \ 'completor': function('asyncomplete#sources#ultisnips#completor'),
     \ }))
-
-" [nerdtree]
-let g:webdevicons_enable_nerdtree = 1
-let g:NERDTreeQuitOnOpen=1
-nnoremap <C-f> :NERDTreeToggle <cr>
-
-" Always open files in new tabs, remap 'enter' to 'l'
-let g:NERDTreeCustomOpenArgs={'file':{'where': 't'}}
-let g:NERDTreeMapCustomOpen      = get(g:, 'NERDTreeMapCustomOpen',      'l')
-
-" Exit Vim if NERDTree is the only window remaining in the only tab.
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-
-" Close the tab if NERDTree is the only window remaining in it.
-autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-
-" [lightline.vim]
-set laststatus=2
-let g:lightline = {
-      \ 'colorscheme': '16color',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead',
-      \   'filetype': 'MyFiletype',
-      \   'fileformat': 'MyFileformat'
-      \ },
-      \ }
-
-function! MyFiletype()
-    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
-  endfunction
-  
-function! MyFileformat()
-    return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
-  endfunction
 
 " [asyncomplete.vim]
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
