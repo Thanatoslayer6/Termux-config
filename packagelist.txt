@@ -1,6 +1,4 @@
 wget
 curl
 vim-python
-sed
-make
 gh
