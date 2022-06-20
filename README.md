@@ -1,6 +1,6 @@
 ## Termux config 
 
-My default Termux configuration bootstraper
+My default Termux configuration bootstrapper
 
 ## Why?
 

@@ -38,20 +38,10 @@ set tabstop=4
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
 
-" Manual Colorscheme fix for solarized8
-"let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-"let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-"set t_Co=256
-"set termguicolors
-"colorscheme solarized8
-
 " Manual PaperColor Colorscheme
 set t_Co=256
 set background=dark
 colorscheme PaperColor
-
-"Automatic day and night colorscheme, use this for manual
-":let &background = strftime("%H") < 17 ? "light" : "dark"
 
 " Remap jk for fast escape, although Ctrl+c is faster?
 inoremap jk <Esc>
@@ -70,6 +60,9 @@ nnoremap Y y$
 
 " Bind redo to `r`
 nnoremap r :redo<cr>
+
+" <Ctrl-l> redraws the screen and removes any search highlighting.
+nnoremap <silent> <C-l> :nohl<CR><C-l>
 
 " Moving text, uses shift key
 nnoremap K :m .-2<CR>==
@@ -91,18 +84,19 @@ call plug#begin('~/.vim/plugins')
     Plug 'junegunn/fzf.vim'
   " Appearance
     Plug 'itchyny/lightline.vim'
-  " Syntax
+  " Formatting
     Plug 'sbdchd/neoformat'
   " LSP
-    Plug 'prabirshrestha/vim-lsp'
-    Plug 'mattn/vim-lsp-settings'
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    " Plug 'prabirshrestha/vim-lsp'
+    " Plug 'mattn/vim-lsp-settings'
   " Completion
-    Plug 'prabirshrestha/asyncomplete.vim'
-    Plug 'prabirshrestha/asyncomplete-lsp.vim'
+    " Plug 'prabirshrestha/asyncomplete.vim'
+    " Plug 'prabirshrestha/asyncomplete-lsp.vim'
   " Snippets
-    Plug 'SirVer/ultisnips'
-    Plug 'honza/vim-snippets'
-    Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
+    " Plug 'SirVer/ultisnips'
+    " Plug 'honza/vim-snippets'
+    " Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
 call plug#end()
 
 " [fzf]
@@ -123,17 +117,17 @@ augroup fmt
 augroup END
 
 " [ultisnips] [forward: Ctrl+l, backward: Ctrl+k, expand snippet: enter]
-let g:UltiSnipsJumpForwardTrigger="<c-l>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-let g:UltiSnipsExpandTrigger = "<nop>"
-inoremap <expr> <CR> pumvisible() ? "<C-R>=UltiSnips#ExpandSnippetOrJump()<CR>" : "\<CR>"
-call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
-    \ 'name': 'ultisnips',
-    \ 'allowlist': ['*'],
-    \ 'completor': function('asyncomplete#sources#ultisnips#completor'),
-    \ }))
+" let g:UltiSnipsJumpForwardTrigger="<c-l>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" let g:UltiSnipsExpandTrigger = "<nop>"
+" inoremap <expr> <CR> pumvisible() ? "<C-R>=UltiSnips#ExpandSnippetOrJump()<CR>" : "\<CR>"
+" call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
+"     \ 'name': 'ultisnips',
+"     \ 'allowlist': ['*'],
+"     \ 'completor': function('asyncomplete#sources#ultisnips#completor'),
+"     \ }))
 
-" [asyncomplete.vim]
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+" " [asyncomplete.vim]
+" inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif

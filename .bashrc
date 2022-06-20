@@ -1,4 +1,4 @@
-#Termux Bashrc
+# Termux Bashrc
 white='\e[0;37m'
 green='\e[0;32m'
 yellow='\e[0;33m'
