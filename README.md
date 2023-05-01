@@ -17,7 +17,7 @@ it grows more than 1gb
 1. ) First, update repositories and install git
 
 ```bash
-pkg update && pkg install git
+pkg update && pkg upgrade && pkg install git
 ````
 
 2. ) Clone repository then run install script

@@ -61,3 +61,4 @@ export PS1
 alias v=vim
 alias editvim='vim ~/.vim/vimrc'
 alias edittermux='vim ~/.termux/termux.properties'
+alias npm="node --dns-result-order=ipv4first /data/data/com.termux/files/usr/bin/npm"
